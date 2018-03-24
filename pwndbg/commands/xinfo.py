@@ -68,7 +68,11 @@ def xinfo_mmap_file(page, addr):
     print_line("File (Memory)", addr, first.vaddr, rva, "+")
 
     for segment in pwndbg.wrappers.readelf.get_load_segment_info():
-        if rva >= segment["VirtAddr"] and rva <= segment["VirtAddr"] + segment["MemSiz"]:
+        print('virtaddr = 0x%x' % segment['VirtAddr'])
+        print('va+memsz = 0x%x' % (segment['VirtAddr'] + segment['MemSiz']))
+        print('addr     = 0x%x' % addr)
+        print('rva      = 0x%x' % rva)
+        if addr >= segment["VirtAddr"] and addr <= segment["VirtAddr"] + segment["MemSiz"]:
             print_line("File (Disk)", addr, file_name, rva - (segment["VirtAddr"] - segment["Offset"]), "+")
 
 def xinfo_default(page, addr):
